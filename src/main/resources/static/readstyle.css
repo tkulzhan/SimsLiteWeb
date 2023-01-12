@@ -1,0 +1,41 @@
+.card2 {
+    float: left;
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+    border-radius: 50%;
+    background-color: #663399;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+body {
+    color: whitesmoke;
+}
+
+.containerm {
+    background-color: #993399;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid rgb(0, 0, 0, 0.5);
+}
+
+.containerm::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.containerm.card2 {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+i:hover {
+    color: #993399;
+}

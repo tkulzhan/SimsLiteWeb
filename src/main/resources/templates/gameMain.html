@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
+            integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
+            crossorigin="anonymous"></script>
+    <link
+            href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
+            rel="stylesheet" type='text/css'>
+    <link rel="stylesheet" href="style.css">
+    <title>Game page</title>
+</head>
+<body style="background-color: #303047">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9" style="padding: 9.5% 2%; text-align: center; background-color: #663399">
+            <div class="row">
+                <div class="col-md-4">
+                    <button onclick="openModal('post_block')" class="btn btn-dark menu_btn">Post</button>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-dark menu_btn" onclick="openModal('new_name_block')">Change name</button>
+                </div>
+                <div class="col-md-4">
+                    <button th:attr="onclick=${'changeStatus('+ '''' + workstatus + '''' + ')'}"
+                            class="btn btn-dark menu_btn">Work
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <button onclick="openModal('unsub_block')" class="btn btn-dark menu_btn">Unsub.</button>
+                </div>
+                <div class="col-md-4">
+                    <button id="radio_btn" onclick="$.post('/radio')" class="btn btn-dark menu_btn">Radio on/off
+                    </button>
+                </div>
+                <div class="col-md-4">
+                    <button onclick="openModal('food_block')" class="btn btn-dark menu_btn">Get food</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <button onclick="openModal('drink_block')" class="btn btn-dark menu_btn">Get drink</button>
+                </div>
+                <div class="col-md-4">
+                    <button onclick="openModal('job_block')" class="btn btn-dark menu_btn">Change job</button>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3" style="background-color: #a100a1; padding: 10% 2%; text-align: center">
+            <form action="/menu" method="get">
+                <button class="btn btn-dark menu_btn">Go to Menu</button>
+            </form>
+            <form action="/logout" method="post">
+                <button class="btn btn-dark menu_btn">Save & Exit</button>
+            </form>
+        </div>
+    </div>
+    <div class="row" style="padding-top: 2%">
+        <div class="col-md-2" style="padding-left: 2%">
+            <img th:src="@{${'/img/Removal-' + img + '.png'}}" width="200px">
+        </div>
+        <div class="col-md-5" style="padding-top: 3%">
+            <h2 id="char_name" data-th-text="${mcname}">Champ123</h2>
+            <br>
+            <h2 id="char_work" data-th-text="${job}">Occupation</h2>
+            <br>
+            <h2 id="char_balance" data-th-text="${savings}">Balance</h2>
+        </div>
+        <div class="col-md-5" style="padding-top: 3%">
+            <h2 id="char_status" data-th-text="${status}">Idle</h2>
+            <br>
+            <h2>Acc holder</h2>
+            <br>
+            <button onclick="openModal('char_list')" class="btn btn-dark">Switch to...</button>
+        </div>
+    </div>
+</div>
+<div id="char_list" class="modal">
+    <div class="row">
+        <h1 class="col-md-10">Choose character</h1>
+        <div class="col-md-2">
+            <i style="font-size: 64px" onclick="closeModal('char_list')"
+               class="fa fa-solid fa-rotate-left back_btn"></i>
+        </div>
+    </div>
+    <form style="margin-top: 3%" class="animate" action="/change_char" method="post">
+        <div class="row" style="margin: 1% 0; text-align: center">
+            <div style="margin: 1% 0" class="col-md-3">
+                <h2>Champ123</h2>
+            </div>
+            <div style="margin: 1% 0" class="col-md-3">
+                <h2>Viktor228</h2>
+            </div>
+            <div style="margin: 1% 0" class="col-md-3">
+                <h2>Smasher520</h2>
+            </div>
+            <div style="margin: 1% 0" class="col-md-3">
+                <h2 data-th-text="${mcname}">Main char</h2>
+            </div>
+        </div>
+        <div class="row" style="margin: 1% 0; text-align: center">
+            <div style="margin: 1% 0" class="col-md-3">
+                <img src="/img/Removal-233.png" width="200px">
+            </div>
+            <div style="margin: 2.25% 0" class="col-md-3">
+                <img src="/img/Removal-366.png" width="200px">
+            </div>
+            <div style="margin: 4% 0" class="col-md-3">
+                <img src="/img/Removal-412.png" width="200px">
+            </div>
+            <div style="margin: 1% 0" class="col-md-3">
+                <img src="/img/Removal-459.png" width="200px">
+            </div>
+        </div>
+        <div class="row" style="margin: 1% 0; text-align: center">
+            <input name="needStatus" value="true" style="display: none">
+            <div style="margin: 1% 0" class="col-md-3">
+                <button class="btn btn-dark" name="char_name" value="champ">Choose</button>
+            </div>
+            <div style="margin: 1% 0" class="col-md-3">
+                <button class="btn btn-dark" name="char_name" value="vik">Choose</button>
+            </div>
+            <div style="margin: 1% 0" class="col-md-3">
+                <button class="btn btn-dark" name="char_name" value="smash">Choose</button>
+            </div>
+            <div style="margin: 1% 0" class="col-md-3">
+                <button class="btn btn-dark" name="char_name" value="mainChar">Choose</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="food_block" class="modal">
+    <div class="row">
+        <h1 class="col-md-10">Choose food set</h1>
+        <div class="col-md-2">
+            <i style="font-size: 64px" onclick="closeModal('food_block')"
+               class="fa fa-solid fa-rotate-left back_btn"></i>
+        </div>
+    </div>
+    <form style="margin-top: 3%" class="animate" action="/get_food" method="post">
+        <div class="row" style="margin: 1% 0; text-align: center">
+            <div class="col-md-4">
+                <h2>Mashed potato with sausage</h2>
+                <img src="/img/MPS.webp" width="200px" style="min-height: 200px; max-height: 200px"
+                     class="img-fluid"><br>
+                <button class="btn btn-dark menu_btn" name="food_set" value="1">Order</button>
+            </div>
+            <div class="col-md-4">
+                <h2>Mashed potato with pattie</h2>
+                <img src="/img/MPP.jpg" width="200px" style="min-height: 200px; max-height: 200px"
+                     class="img-fluid"><br>
+                <button class="btn btn-dark menu_btn" name="food_set" value="2">Order</button>
+            </div>
+            <div class="col-md-4">
+                <h2>Rice with sausage</h2>
+                <img src="/img/RS.jpg" width="200px" style="min-height: 200px; max-height: 200px" class="img-fluid"><br>
+                <button class="btn btn-dark menu_btn" name="food_set" value="3">Order</button>
+            </div>
+        </div>
+        <div class="row" style="margin: 1% 0; text-align: center">
+            <div class="col-md-4">
+                <h2>Rice with pattie</h2>
+                <img src="/img/RP.png" width="200px" style="min-height: 200px; max-height: 200px" class="img-fluid"><br>
+                <button class="btn btn-dark menu_btn" name="food_set" value="4">Order</button>
+            </div>
+            <div class="col-md-4">
+                <h2>Pasta with sausage</h2>
+                <img src="/img/PS.webp" width="200px" style="min-height: 200px; max-height: 200px"
+                     class="img-fluid"><br>
+                <button class="btn btn-dark menu_btn" name="food_set" value="5">Order</button>
+            </div>
+            <div class="col-md-4">
+                <h2>Pasta with pattie</h2>
+                <img src="/img/PP.webp" width="200px" style="min-height: 200px; max-height: 200px"
+                     class="img-fluid"><br>
+                <button class="btn btn-dark menu_btn" name="food_set" value="6">Order</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="drink_block" class="modal">
+    <div class="row">
+        <h1 class="col-md-10">Choose your drink</h1>
+        <div class="col-md-2">
+            <i style="font-size: 64px" onclick="closeModal('drink_block')"
+               class="fa fa-solid fa-rotate-left back_btn"></i>
+        </div>
+    </div>
+    <form style="margin-top: 3%" class="animate" action="/get_drink" method="post">
+        <div class="row" style="margin: 1% 0; text-align: center">
+            <div class="col-md-4">
+                <h2 style="margin-bottom: 1%">Tea</h2>
+                <img src="/img/tea.webp" width="200px" style="min-height: 200px; max-height: 200px"
+                     class="img-fluid"><br>
+                <button class="btn btn-dark menu_btn" name="drink" value="Tea">Order</button>
+            </div>
+            <div class="col-md-4">
+                <h2 style="margin-bottom: 1%">Coffee</h2>
+                <img src="/img/coffee.png" width="200px" style="min-height: 200px; max-height: 200px" class="img-fluid"><br>
+                <button class="btn btn-dark menu_btn" name="drink" value="Coffee">Order</button>
+            </div>
+            <div class="col-md-4">
+                <h2 style="margin-bottom: 1%">Booze</h2>
+                <img src="/img/booze.png" width="200px" style="min-height: 200px; max-height: 200px"
+                     class="img-fluid"><br>
+                <button class="btn btn-dark menu_btn" name="drink" value="Booze">Order</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="job_block" class="modal">
+    <div class="row">
+        <h1 class="col-md-10">Choose your job</h1>
+        <div class="col-md-2">
+            <i style="font-size: 64px" onclick="closeModal('job_block')"
+               class="fa fa-solid fa-rotate-left back_btn"></i>
+        </div>
+    </div>
+    <form style="margin-top: 3%" class="animate" action="/change_job" method="post">
+        <div class="row" style="margin: 1% 0; text-align: center">
+            <div class="col-md-4">
+                <h2 style="margin-bottom: 5%">Builder</h2>
+                <img src="/img/builder.png" width="250px" style="min-height: 250px; max-height: 250px"
+                     class="img-fluid"><br>
+                <button class="btn btn-dark menu_btn" name="new_job" value="builder">Start working</button>
+            </div>
+            <div class="col-md-4">
+                <h2 style="margin-bottom: 5%">Lawyer</h2>
+                <img src="/img/law.png" width="250px" style="min-height: 250px; max-height: 250px"
+                     class="img-fluid"><br>
+                <button class="btn btn-dark menu_btn" name="new_job" value="lawyer">Start working</button>
+            </div>
+            <div class="col-md-4">
+                <h2 style="margin-bottom: 5%">None</h2>
+                <img src="/img/unemployed.png" width="250px" style="min-height: 250px; max-height: 250px"
+                     class="img-fluid"><br>
+                <button class="btn btn-dark menu_btn" name="new_job" value="none">Start working</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="post_block" class="modal">
+    <div class="row">
+        <h1 class="col-md-10">Write your message</h1>
+        <div class="col-md-2">
+            <i style="font-size: 64px" onclick="closeModal('post_block')"
+               class="fa fa-solid fa-rotate-left back_btn"></i>
+        </div>
+    </div>
+    <div class="row" style="padding: 2% 2%">
+        <div class="col-sm-12">
+            <p style="color: yellow" id="sent"></p>
+        </div>
+    </div>
+    <form id="postForm" style="margin-top: 3%" class="animate" action="/post_msg" method="post">
+        <div class="row" style="margin: 1% 0; text-align: center">
+            <div class="input-group mb-3">
+                <textarea name="text" type="text" class="form-control"></textarea>
+                <div class="input-group-append">
+                    <button class="btn btn-dark">Post</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="new_name_block" class="modal">
+    <div class="row">
+        <h1 class="col-md-10">Write your message</h1>
+        <div class="col-md-2">
+            <i style="font-size: 64px" onclick="closeModal('post_block')"
+               class="fa fa-solid fa-rotate-left back_btn"></i>
+        </div>
+    </div>
+    <form style="margin-top: 3%" class="animate" action="/change_name" method="post">
+        <div class="row" style="margin: 1% 0; text-align: center">
+            <div class="input-group mb-3">
+                <input name="text" type="text" class="form-control">
+                <div class="input-group-append">
+                    <button class="btn btn-dark">Change name</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="unsub_block" class="modal">
+    <div class="row">
+        <h1 class="col-md-10">Enter who to unsub</h1>
+        <div class="col-md-2">
+            <i style="font-size: 64px" onclick="closeModal('unsub_block')"
+               class="fa fa-solid fa-rotate-left back_btn"></i>
+        </div>
+    </div>
+    <form id="unsubForm" style="margin-top: 3%" class="animate" action="/unsub" method="post">
+        <div class="input-group mb-3">
+            <input type="text" name="name" class="form-control" placeholder="Username">
+            <div class="input-group-append">
+                <button class="btn btn-dark"> Unsubscribe </button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
