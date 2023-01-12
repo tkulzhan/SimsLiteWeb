@@ -182,12 +182,13 @@ public class Mongo {
             BasicDBObject query = new BasicDBObject();
             query.put("_id", id);
             FindIterable<Document> cursor = games.find(query);
-            List<String> champU = Objects.requireNonNull(cursor.first()).getList("champU", String.class);
-            List<String> champR = Objects.requireNonNull(cursor.first()).getList("champR", String.class);
-            List<String> vikU = Objects.requireNonNull(cursor.first()).getList("vikU", String.class);
-            List<String> vikR = Objects.requireNonNull(cursor.first()).getList("vikR", String.class);
-            List<String> smashU = Objects.requireNonNull(cursor.first()).getList("smashU", String.class);
-            List<String> smashR = Objects.requireNonNull(cursor.first()).getList("smashR", String.class);
+            Document messages = (Document) cursor.first().get("messages");
+            List<String> champU = Objects.requireNonNull(messages).getList("champU", String.class);
+            List<String> champR = Objects.requireNonNull(messages).getList("champR", String.class);
+            List<String> vikU = Objects.requireNonNull(messages).getList("vikU", String.class);
+            List<String> vikR = Objects.requireNonNull(messages).getList("vikR", String.class);
+            List<String> smashU = Objects.requireNonNull(messages).getList("smashU", String.class);
+            List<String> smashR = Objects.requireNonNull(messages).getList("smashR", String.class);
             champ.setUnread((ArrayList<String>) champU);
             champ.setRead((ArrayList<String>) champR);
             vik.setUnread((ArrayList<String>) vikU);
@@ -203,17 +204,17 @@ public class Mongo {
         try {
             MongoCollection<Document> games = database.getCollection("games");
             Bson query = new Document("_id", id);
-            Bson update = Updates.set("champU", champ.getUnread());
+            Bson update = Updates.set("messages.champU", champ.getUnread());
             games.findOneAndUpdate(query, update);
-            update = Updates.set("champR", champ.getRead());
+            update = Updates.set("messages.champR", champ.getRead());
             games.findOneAndUpdate(query, update);
-            update = Updates.set("vikU", vik.getUnread());
+            update = Updates.set("messages.vikU", vik.getUnread());
             games.findOneAndUpdate(query, update);
-            update = Updates.set("vikR", vik.getRead());
+            update = Updates.set("messages.vikR", vik.getRead());
             games.findOneAndUpdate(query, update);
-            update = Updates.set("smashU", smash.getUnread());
+            update = Updates.set("messages.smashU", smash.getUnread());
             games.findOneAndUpdate(query, update);
-            update = Updates.set("smashR", smash.getRead());
+            update = Updates.set("messages.smashR", smash.getRead());
             games.findOneAndUpdate(query, update);
         } catch (Exception e) {
             e.printStackTrace();
@@ -380,12 +381,14 @@ public class Mongo {
                                      List<String> subs, Document game) {
         game.append("_id", game_id);
         game.append("game_name", game_name);
-        game.append("champU", champU);
-        game.append("champR", champR);
-        game.append("vikU", vikU);
-        game.append("vikR", vikR);
-        game.append("smashU", smashU);
-        game.append("smashR", smashR);
+        BasicDBObject messages = new BasicDBObject();
+        messages.append("champU", champU);
+        messages.append("champR", champR);
+        messages.append("vikU", vikU);
+        messages.append("vikR", vikR);
+        messages.append("smashU", smashU);
+        messages.append("smashR", smashR);
+        game.append("messages", messages);
         game.append("savings", savings);
         game.append("work", work);
         game.append("radio", radio);
