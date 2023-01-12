@@ -247,7 +247,7 @@ public class GameController {
     @PostMapping("/delete")
     public String deleteGame() {
         GameService.deleteGame();
-        return "menu";
+        return "redirect:/menu";
     }
 
     @PostMapping("/save")
