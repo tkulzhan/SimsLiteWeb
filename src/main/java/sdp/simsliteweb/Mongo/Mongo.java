@@ -25,7 +25,7 @@ import static sdp.simsliteweb.services.GameService.*;
 
 public class Mongo {
     private static final MongoClient mongoClient = new MongoClient("localhost", 27017);
-    private static final MongoDatabase database = mongoClient.getDatabase("sdp");
+    private static final MongoDatabase database = mongoClient.getDatabase("nosql");
     private static final BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 
     public static void register(String username, String password) {
