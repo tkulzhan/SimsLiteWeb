@@ -249,4 +249,9 @@ public class GameController {
         GameService.deleteGame();
         return "menu";
     }
+
+    @PostMapping("/save")
+    public void save() {
+        GameService.saveGame();
+    }
 }

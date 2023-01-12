@@ -63,9 +63,7 @@
             <form action="/menu" method="get">
                 <button class="btn btn-dark menu_btn">Go to Menu</button>
             </form>
-            <form action="/logout" method="post">
-                <button class="btn btn-dark menu_btn">Save & Exit</button>
-            </form>
+            <button onclick="$.post('/save')" class="btn btn-dark menu_btn">Save progress</button>
             <form action="/delete" method="post">
                 <button class="btn btn-dark menu_btn">Delete game</button>
             </form>
