@@ -85,12 +85,7 @@ public class GameController {
     public String readNew(Model model) {
         GameService.lines.add("Reading new posts");
         ArrayList<String> messages = GameService.readNew();
-        ArrayList<Message> msgs = new ArrayList<>();
-        for (String m:messages) {
-            String[] msg = m.split(":");
-            msgs.add(new Message(msg[1], msg[0].toUpperCase().substring(0, 1)));
-        }
-        model.addAttribute("messages", msgs);
+        formatMsg(model, messages);
         model.addAttribute("author", "New posts from " + GameService.mainChar.getAlias());
         return "read";
     }
@@ -99,14 +94,18 @@ public class GameController {
     public String readOld(Model model) {
         GameService.lines.add("Reading old posts");
         ArrayList<String> messages = GameService.readOld();
+        formatMsg(model, messages);
+        model.addAttribute("author", "Old posts from " + GameService.mainChar.getAlias());
+        return "read";
+    }
+
+    private void formatMsg(Model model, ArrayList<String> messages) {
         ArrayList<Message> msgs = new ArrayList<>();
         for (String m:messages) {
             String[] msg = m.split(":");
             msgs.add(new Message(msg[1], msg[0].toUpperCase().substring(0, 1)));
         }
         model.addAttribute("messages", msgs);
-        model.addAttribute("author", "Old posts from " + GameService.mainChar.getAlias());
-        return "read";
     }
 
     @PostMapping("/change_char")
